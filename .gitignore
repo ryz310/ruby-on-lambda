@@ -4,5 +4,6 @@ jspm_packages
 
 # Serverless directories
 .serverless
-var/task/lib
-var/task/ruby
+
+lib
+ruby
