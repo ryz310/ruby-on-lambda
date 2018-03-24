@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+TASK_PATH = './var/task'
+LIB_PATH = "#{TASK_PATH}/lib"
+
+def command(description, options = {})
+  options[:if] ||= !options.delete(:unless)
+  return unless options.delete(:if)
+
+  puts "\n== #{description} =="
+  yield
+  if $?.success?
+    puts "[OK] #{$?}"
+  else
+    puts "[ERROR] #{$?}"
+    exit 1
+  end
+end
+
+command 'Checking docker' do
+  system('which docker-compose', %i(out err) => IO::NULL)
+end
+
+command 'Create directories', unless: FileTest.exist?(LIB_PATH) do
+  require 'fileutils'
+  FileUtils.mkdir_p(LIB_PATH)
+end
+
+command 'Build docker image' do
+  `docker build -t ruby-on-lambda-image .`
+end
+
+command 'Create docker container' do
+  `docker create --name ruby-on-lambda-container ruby-on-lambda-image`
+end
+
+command 'Copy binary files from container' do
+  `docker cp ruby-on-lambda-container:/lib/ld-musl-x86_64.so.1 #{LIB_PATH}`
+  `docker cp ruby-on-lambda-container:/var/task/ruby #{TASK_PATH}`
+end
