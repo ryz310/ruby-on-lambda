@@ -46,14 +46,14 @@ provider:
 #  environment:
 #    variable1: value1
 
-# you can add packaging information here
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+package:
+  exclude:
+    - ./**
+  include:
+    - app/**
+    - lib/ld-musl-x86_64.so.1
+    - ruby/**
+    - ruby.sh
 
 functions:
   hello:
