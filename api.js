@@ -3,7 +3,8 @@
 const { exec, spawn } = require('child_process')
 
 module.exports.execute = (event, context, callback) => {
-  exec(['bash /var/task/ruby.sh hello.rb'], (err, stdout, stderr) => {
+  const command = 'bash /var/task/ruby.sh ' + process.env.command
+  exec([command], (err, stdout, stderr) => {
     if (err instanceof Error) {
       callback(err, null);
     } else {

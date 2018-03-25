@@ -53,15 +53,18 @@ package:
     - app/**
     - lib/ld-musl-x86_64.so.1
     - ruby/**
+    - api.js
     - ruby.sh
 
 functions:
   hello:
-    handler: app/hello.execute
+    handler: api.execute
     events:
       - http:
           path: ruby/hello
           method: get
+    environment:
+      command: hello.rb
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
