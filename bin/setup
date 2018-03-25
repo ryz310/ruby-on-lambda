@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#! /usr/bin/env ruby
 
 def command(description, options = {})
   options[:if] ||= !options.delete(:unless)
@@ -22,7 +22,8 @@ command 'Build docker image' do
   `docker build -t ruby-on-lambda-image .`
 end
 
-command 'Create docker container' do
+command 'Re-Create docker container' do
+  `docker rm ruby-on-lambda-container`
   `docker create --name ruby-on-lambda-container ruby-on-lambda-image`
 end
 
