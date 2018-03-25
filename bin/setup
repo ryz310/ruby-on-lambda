@@ -28,6 +28,7 @@ command 'Re-Create docker container' do
 end
 
 command 'Copy binary files from container' do
+  `rm -rf lib ruby`
   `docker cp ruby-on-lambda-container:/lib .`
   `docker cp ruby-on-lambda-container:/var/task/ruby .`
 end
