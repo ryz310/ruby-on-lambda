@@ -52,7 +52,9 @@ package:
   include:
     - app/**
     - lib/ld-musl-x86_64.so.1
-    - ruby/**
+    - ruby/bin/ruby
+    - ruby/include/**
+    - ruby/lib/**
     - api.js
     - ruby.sh
 
